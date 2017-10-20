@@ -1,0 +1,47 @@
+---
+- name: Server | Install Python Packages
+  become: yes
+  apt:
+      pkg: "{{ item }}"
+      state: latest
+  with_items:
+    - python-software-properties
+    - python-setuptools
+    - python-dev
+    - build-essential
+
+- name: Server | Install PIP
+  easy_install:
+      name: pip
+      state: latest
+
+- name: Server | Install System Packages
+  become: yes
+  apt:
+      pkg: "{{ item }}"
+      state: latest
+  with_items: "{{ server.packages }}"
+  when: server.packages is defined
+
+- name: Server | Configure the timezone
+  become: yes
+  template:
+      src: timezone.tpl
+      dest: /etc/timezone
+  when: server.timezone.install == true
+
+- name: Server | More Configure the timezone
+  become: yes
+  file:
+      src: /usr/share/zoneinfo/{{server.timezone.data}}
+      dest: /etc/localtime
+      state: link
+      force: yes
+      backup: yes
+  when: server.timezone.install == true
+
+- name: Server | Set default system language pack
+  shell: locale-gen {{ server.locale }}
+  become: yes
+  when: server.timezone.install == true
+

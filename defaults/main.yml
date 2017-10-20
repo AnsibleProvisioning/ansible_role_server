@@ -1,0 +1,7 @@
+---
+server:
+    user: ubuntu
+    timezone:
+        install: false
+        data: Europe/London
+    packages: []
