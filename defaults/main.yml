@@ -1,7 +1,5 @@
 ---
-server:
-    user: ubuntu
-    timezone:
-        install: false
-        data: Europe/London
-    packages: []
+server_timezone: Europe/London
+server_locale: en_GB.UTF-8
+server_packages: []
+server_ntp_servers: []

@@ -1,0 +1,9 @@
+---
+- name: Timezone | Configure the timezone
+  become: yes
+  timezone:
+      name: "{{ server_timezone }}"
+
+- name: Timezone | Set default system language pack
+  shell: locale-gen {{ server_locale }}
+  become: yes

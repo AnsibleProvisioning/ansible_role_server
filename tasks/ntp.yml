@@ -1,0 +1,28 @@
+---
+- name: NTP | Install
+  become: yes
+  apt:
+      pkg: "{{ item }}"
+      state: latest
+  with_items:
+    - ntp
+    - ntpdate
+  notify: stop ntp
+
+- name: NTP | Create config
+  template:
+      src: ntp.conf.j2
+      dest: /etc/ntp.conf
+  notify: restart ntp
+
+- name: NTP | Stop Service
+  service:
+      name: ntp
+      enabled: yes
+      state: stopped
+
+- name: NTP | Start Service
+  service:
+      name: ntp
+      enabled: yes
+      state: started

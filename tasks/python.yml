@@ -1,0 +1,16 @@
+---
+- name: Server | Install Python Packages
+  become: yes
+  apt:
+      pkg: "{{ item }}"
+      state: latest
+  with_items:
+    - python-software-properties
+    - python-setuptools
+    - python-dev
+    - build-essential
+
+- name: Server | Install PIP
+  easy_install:
+      name: pip
+      state: latest

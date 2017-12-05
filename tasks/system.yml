@@ -1,0 +1,8 @@
+---
+- name: Server | Install System Packages
+  become: yes
+  apt:
+      pkg: "{{ item }}"
+      state: latest
+  with_items: "{{ server_packages }}"
+  when: server_packages is defined
